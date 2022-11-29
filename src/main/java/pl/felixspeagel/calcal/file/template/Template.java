@@ -2,7 +2,7 @@ package pl.felixspeagel.calcal.file.template;
 
 import java.awt.*;
 import java.io.*;
-import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -53,23 +53,23 @@ public class Template {
 	}
 	
 	public static Template getTemplate(String directory, String name) {
-		File res;
+		InputStream res;
 		try{
 			var to_load = directory + "." + Locale.getDefault().toString() + "/" + name;
 			
-			res = new File( ClassLoader.getSystemResource( to_load ).toURI() );
+			res = ClassLoader.getSystemResource( to_load ).openStream();
 			
-		} catch( URISyntaxException | NullPointerException e1 ) {
+		} catch( IOException | NullPointerException e1 ) {
 			try {
 				var to_load = directory + "/" + name;
 				
-				res = new File( ClassLoader.getSystemResource( to_load ).toURI() );
-			} catch( URISyntaxException | NullPointerException e2 ) {
+				res = ClassLoader.getSystemResource( to_load ).openStream();
+			} catch( IOException | NullPointerException e2 ) {
 				return null;
 			}
 		}
 		
-		try(BufferedReader br = new BufferedReader(new FileReader(res))) {
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(res, StandardCharsets.UTF_8 ))) {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			
