@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="calcal">
+    <output-path>$PROJECT_DIR$/out/artifacts/calcal</output-path>
+    <root id="archive" name="calcal.jar">
+      <element id="module-output" name="CalCal" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{calendar.title}}</title>
+    <style>
+    	.title {
+    			font-size: 24pt;
+    	}
+    
+    	.yearheader {
+    		display: block;
+    		font-size: 24pt;
+    		padding: 0 0 0 10px;
+    		border-bottom: double green 10px;
+    		text-align: center;
+    	}
+    	
+    	.month {
+    		border: solid black 2px;
+    		border-spacing: 0;
+    		border-radius: 20px;
+    		display: inline-block;
+    		vertical-align: top;
+    	}
+    	
+    	.month th {
+    		font-size: 20pt;
+    		border-top-left-radius: 20px;
+    		border-top-right-radius: 20px;
+    		padding: 20px 5px 20px 10px;
+    	}
+    	.month td {
+    		padding: 5px;
+    		border: solid 1px darkgray;
+    		vertical-align: top;
+    		text-align: center;
+    	}
+    	
+    	.normal-month th {
+    		background-color: {{color.normal.bg}};
+    		color: {{color.normal.fg}};
+    	}
+    	
+    	.leap-month th {
+    		background-color: {{color.leap.bg}};
+    		color: {{color.leap.fg}};
+    	}
+    	
+    	.epagomenal-month th {
+    		background-color: {{color.epagomenal.bg}};
+    		color: {{color.epagomenal.fg}};
+    	}
+    	
+    	.new-moon:before {
+    		content: "\1f311";
+    		font-size: 10pt;
+    	}
+    	.waxing-crescent:before {
+    		content: "\1f312";
+    		font-size: 10pt;
+    	}
+    	.first-quarter:before {
+    		content: "\1f313";
+    		font-size: 10pt;
+    	}
+    	.waxing-gibbous:before {
+    		content: "\1f314";
+    		font-size: 10pt;
+    	}
+    	.full-moon:before {
+    		content: "\1f315";
+    		font-size: 10pt;
+    	}
+    	.waning-gibbous:before {
+    		content: "\1f316";
+    		font-size: 10pt;
+    	}
+    	.last-quarter:before {
+    		content: "\1f317";
+    		font-size: 10pt;
+    	}
+    	.waning-crescent:before {
+    		content: "\1f318";
+    		font-size: 10pt;
+    	}
+    	
+    	.winter:before {
+    		content: url(data:image/gif;base64,R0lGODlhFAAUAPYAAAAAAB9QtCNXwiNXwylf0Ctk1i9l1C5l1S1m2DRq2DRq2TFq3jdw4zxz4jx05jZx6Dt16kZ33kZ53kZ430l63kl73kx730l83k583UF24UN340l74Eh64U1+4U9/4FCA31SC3lWC3lSC31KA4VCB4lWC4FSD4FSD5FmG4V2J4FuI5GCL4mKM4mGN5WKN5maQ5miQ42qR42mR5G6V5G2V52mT6G+Y6W+Y7HGX5Xec53Sa6XKa7HSd7Xee7nid6Hqe6Xmf7HKe93Wf932h6H2j736k73yi8H2j8oCk6oWn6ISm6YSn7oao6YWo74mp6Yuq6Ymp6o6s6I+t6pCt6ZGv6ZCt6pGu65Ov7JSw6pWx6pWy7Zay7Zay7pa07pa075i07Zm07pm17oaq85m28Jq28JW5/5i8/5q+/5u//5y+/5y//53B/5/B/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAAAALAAAAAAUABQAAAekgACCg4SFhoeIiYQHB4qIFReOhSVBOT5CKIoEABgrgl1dgjAgAAiGDxM8g1dUgk9FHRCHKmVjrk+CY2ovhxE3UWFqSjMwQ2dbWUYdjjocGjWShDYaDS6OEztUW2xILCk+x1lEH4cuZ7YATEq5bDOHDBxGg1RRglRiIw6FAQUAIDKCwoQRhCMFgAWOeCxpAiSaoAojQJQ4YcGhIAUKLA4SIEBjtEAAOw==);
+    	}
+    	.summer:before {
+    		content: url(data:image/gif;base64,R0lGODlhFAAUAPcAAAAAANxfIN9jId5jIuBkIuNnIuFoIuVsJeVtJeZtJOZsJeZtJedtJeduJedvJutwJu1wJu5wJu5wJ/N3KfF3KvF5KvF4K/F6KvJ6K/N6K/V7K/V9LPZ9LP95Kv96Kvp+LPt+LP9/LPWBLfaALfaBLfeCLfaBLveBLveCLvmBLfiBLvmDLv+ALf+BLf+CLvuEL/+FL/+GL/+HL/uFMPyFMP2EMf+FMP+GMP+HMPuJMPyJMPyJMf+JMf2KMf2LMf2LMv+LMvyNMf2NMf2OMP2PMf+PMf+MMv+NMv+NM/2PM/+OM/+QMf2QMv2SMv+SMv+fMP+fMf+jLv+kLf6mLv+mLv6tLf6vLf22K/23K/+0Lv+1L/+3L/y5Kv24K/+gMP+gMv+iMv+jMv+kMv+lMvrTHvrTH/nVHPnUHfnVHfndGPrdGPrcGfrfGPndGvrcG/rBJ/vCJ/rDJ/vDJ/vEJvvFJvvEJ/jrJfjrJvjsJvjsKfjtKvjwRvjwSfjwS/jwTvjycfjycvjyd/nymPjymfnzmfnzmvjzm/nynPjznPn1u/n1vQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAAAALAAAAAAUABQAAAjwAAEIHEiwoMGDABIkQMgQQAYNDQUWKKhDR0EDBhO0SCHQCJOPAlO0WGgQBg4dT7Zw4bLFSw4cMBCSMDJljpk2bczEmWKEBEMxc9ro8eNHT5s5Yhjq2GJGTyBEiALpMbPFIsEHGVIY4dKmTyFFigr1acOlZwYJAju0wMEES9dCiRKJbYPFCI4WHQYIzEBChxUyeP4UKvQHDxkrOkhkMIjDS5w2d/bsudMmjhccDI1EiUMGJ5mdRhhumOnFChYsVp4YSbHhYIIQMEi80GHEiI4ZJGCEIEmwgIQJAkngwOETwAQJeiN++BDRNe/mAwMEYBgQADs=);
+    	}
+    	.spring:before {
+    		content: url(data:image/gif;base64,R0lGODlhFAAUAPYAAAAAAJK/LpLALZLALpPALpPAL5TCL5jIL5TBMJXBMZXCMZXBMpbBMpfEMpfEM5fCNJnHMZjCN5nCN5nDN5rCNprCN5rDN5nENJnHNJrHNZrEN5rIM57ONJ/MNp/NN5/ONpnBOJnCOJnCOZrCOJrDOJrCOZvCOZvDOZvDOpzDOpvEOJvFOZzFOJ3GOJ3HOJzGOZ3GOZ3HOZ3GO53IOZ/JOZ/LOZ/JOp/IO6HLOqDMOaHMOqHMO6LNO6LOO6POO6POPKTPPKLRN6TRO6XRPKbRPafTPanVParXPqPGRabJR6fHSqnHTajJSqnMSK/PT6rTQq7JVK7KVK/KVbDKV7HNVbXOWrbNXbbNX7fVVrnNYrvOZbzOZb/Pa7/SZsbSc8nSd8vSe8/Vf9LVhdPWhtTbgtbXidjWjdjYjdzYkuDal+PbmwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAAAALAAAAAAUABQAAAepgACCg4SFhoeHGBhIORKIhhtPZFkcKI+EHExpWwg5lgAQBggPMYUYSWpWAyg5gjlYXVVNHBw1ghI5aFmrMY4ANVBcYGdlWkAIAANeX6soR4MSQQEIKVBhZlQHSmMSEihFvoIxRSgSCANLY1NWUA4/ORiG4zk1MQ41TuUrpY8xKyjlOl16RG7gIYAGDXlLWEgCP4aCUNiCKAjHQ4YShHyCKOFIOIYrJhoKBAA7);
+    	}
+    	.fall:before {
+    		content: url(data:image/gif;base64,R0lGODlhFAAUAPcAAAAAAN8NHeEFHeAGHuEJHeAJHuEJHuAKHucLHeEMHeUPHOUPHegJH+MUG+YUG+kaG+0YG+4bG+8cGuwYHPATHvAfGvAcHOcnFuokF+wmF+gqFuwpF+wiGe0kGO4oGPAnF/AtFfEvFPYvFvMhGvUmGesyFO85E+4/EPMxFvQ3FfoyF/A6EvU/E/Y+E/I5FPg/E/o5Fv84F/87F/89Fv8yGf8zGf83GNwAINwAId4AIOsEIfRFD/JJD/RLD/VPDvZOD/tND/FQDfJTDP9RD/xSD/hVDf5VD/9WD/9XD/VfCfpeC/xfC/tZDf9YD/tcDP9eDf9fDvdHEPpBEv1EE/9FEv9DFfZIEPtLEfxLEfxKEv1LEvxOEP9MEv9OEv9PEv9QEf5REf9REf1TEf9TEf1VEP9UEf9UEv9VEv9WEv9WE/9YEvlqB/trB/5lCv9lC/5nCv9nC/9hDf9hDv9qCf9rCf9oCv9qCv9tCP9sCf9uCP5yB/9yB/9zB/52Bf90Bv91Bv94BP97BP+RAP+SAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAAAALAAAAAAUABQAAAjOAAEIHEiwoMGDADRcQMgwR4kNORgeZHDCxAKJBSVw8NHDAwmMA2ukUOKkxQyQAqdcoeMGDBCEAWwkGPABABE0LNU0AfDCwYIYDQZaCFKhRhQAOFsCMFJFRZAHBHNMSGLFixEweOiAQYOGyZoREQca0IFhjRs0WLXi7OOCQsEBCEa06LPHCx2tdL3EgHAQAowsdPbgwbPHjZcsIg5mWFHkbqBBgwLRwbNkBwiDHVBMMSJHjg8eT0ITkXKZYRaCYFASTKC6oIHWYl/DFij7YEAAOw==);
+    	}
+    	
+    </style>
+  </head>
+  <body>
+  	<h1 class="title">{{calendar.title}}</h1>
+    {{calendar.body}}
+  </body>
+</html>
